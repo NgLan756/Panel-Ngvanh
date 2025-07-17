@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ngvanh Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0d001f, #12002e);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+      flex-direction: column;
+    }
+    .lightning {
+      position: absolute;
+      width: 2px;
+      height: 100vh;
+      background: linear-gradient(to bottom, transparent, #ffffff88, transparent);
+      animation: flicker 1s infinite ease-in-out;
+      opacity: 0.3;
+    }
+    @keyframes flicker {
+      0%, 100% { transform: translateY(0); opacity: 0.2; }
+      50% { transform: translateY(-20px); opacity: 0.6; }
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 60px #b12bff99;
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+    }
+    .title {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #fffeff;
+      text-shadow: 0 0 35px #ae00ff;
+    }
+    .input-box {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: none;
+      background: #1f1f1f;
+      color: white;
+      margin-bottom: 20px;
+      font-size: 16px;
+      box-shadow: 0 0 10px #8e00ff88;
+    }
+
+ .card {
+      background-color: #15151580;
+      border-radius: 9px;
+      padding:15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px #40f2ff9f;
+      flex-wrap: wrap;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      width: 60%;
+      margin-bottom: 21px;
+    }
+
+ .text-bold {
+      font-weight: 500;
+      text-shadow: 0 0 5px #00f0ff;
+    }
+
+
+
+    .button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(45deg, #8e00ff, #00ccff);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #8e00ff99;
+      transition: 0.3s;
+      margin-bottom: 15px;
+    }
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px #ff00ff, 0 0 80px #0099ff;
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #8e00ff;
+      padding: 12px 24px;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 9999;
+    }
+    .toast.show { opacity: 1; }
+    .option-panel {
+      display: none;
+      background: #14001e;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px #ff00ff88;
+    }
+    .option-panel .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .option-panel .feature-btn {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      background: #290033;
+      border: none;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff00ff88;
+    }
+    .summary-box {
+      margin-top: 20px;
+      background: #1c0025;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #a100ff88;
+      display: none;
+    }
+    .loader {
+      width: 100%;
+      background: #222;
+      border-radius: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+      display: none;
+    }
+    .loader-inner {
+      height: 20px;
+      background: linear-gradient(90deg, #ff00f3, #00ccff);
+      width: 0%;
+      transition: width 0.05s;
+    }
+ 
+.info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 35px;
+  flex-wrap: wrap;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+    .stats {
+      margin-top: 35px;
+      text-align: left;
+      font-size: 15px;
+      background: #181515;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 55px #e100ff55;
+      color: #f5ccff;
+      line-height: 1.7;
+    }
+
+
+    #ffChoice {
+      display: none;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="lightning" style="left: 20%; animation-delay: 0s;"></div>
+  <div class="lightning" style="left: 50%; animation-delay: 0.5s;"></div>
+  <div class="lightning" style="left: 75%; animation-delay: 1s;"></div>
+
+  <div class="container" id="loginBox">
+    <img src="https://i.imgur.com/8CNRPV8.png" class="logo">
+    <div class="title">🔐 Vui Lòng Nhập Key </div>
+    <input id="keyInput" type="password" class="input-box" placeholder="Aimlock Ngvanh">
+    <div class="loader" id="loginLoader"><div class="loader-inner" id="loginProgress"></div></div>
+    <button class="button" onclick="checkKey()">Đăng Nhập Menu</button>
+  </div>
+
+  <div class="container" id="menuBox" style="display:none;">
+    <img src="https://i.imgur.com/8CNRPV8.png" class="logo">
+    <div class="title">🎮 Chọn Chức Năng</div>
+    
+    <button class="button" onclick="openOption('Aimbot')">💥 AIM SETTINGS :</button>
+   
+    <div id="optionPanel" class="option-panel"></div>
+   
+   <div class="card">
+      <div class="left">
+        
+        <div class="text-bold"> Function Options :</div>
+      </div>
+      <select class="option-box" onchange="showToast('Đã Bật: ' + this.value)">
+        <option>...</option>
+        <option>Đạn Thẳng</option>
+        <option>Nạp Đạn Nhanh</option>
+      <option>Không Nạp Đạn</option>
+        <option>Nhẹ Tâm 90%</option>
+    <option>Reg Plus 80%</option>
+        <option>Fix Rung</option>
+    <option>Fix Lag</option>
+        <option>Giảm Delay</option>
+    
+    
+    </select>
+    </div>
+   
+ 
+   
+    <button class="button" onclick="activateAll()"> KÍCH HOẠT TẤT CẢ</button>
+    <div class="loader" id="activationLoader"><div class="loader-inner" id="activationProgress"></div></div>
+    
+   
+    
+    <div id="ffChoice">
+      <button class="button" onclick="selectFF('Free Fire')">KÍCH HOẠT CHO Free Fire</button>
+      <button class="button" onclick="selectFF('Free Fire Max')">KÍCH HOẠT CHO Free Fire Max</button>
+    </div>
+    <div id="summaryBox" class="summary-box"></div>
+  </div>
+
+    <div class="info-wrapper">
+  <div class="stats">
+    📶 Ping/WiFi: <span id="ping">Đang đo...</span><br />
+    🎮 FPS: <span id="fps">0</span> FPS<br />
+    🔋 RAM sử dụng: <span id="ram">--%</span><br />
+    🧠 CPU: <span id="cpu">--%</span>
+  </div>
+ 
+
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const selectedOptions = {};
+    let progressInterval;
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function checkKey() {
+      const key = document.getElementById('keyInput').value.trim();
+      if (key !== 'Ngvanh') return showToast('❌ Key không đúng!');
+      document.getElementById('loginLoader').style.display = 'block';
+      let prog = 0;
+      const loader = document.getElementById('loginProgress');
+      progressInterval = setInterval(() => {
+        prog += 2;
+        loader.style.width = prog + '%';
+        if (prog >= 100) {
+          clearInterval(progressInterval);
+          document.getElementById('loginBox').style.display = 'none';
+          document.getElementById('menuBox').style.display = 'block';
+          showToast('✅ Truy cập thành công!');
+        }
+      }, 30);
+    }
+
+    function openOption(name) {
+      const panel = document.getElementById('optionPanel');
+      panel.innerHTML = `
+        <div class="close-btn" onclick="closeOption()">❌</div>
+        <strong>Tùy chọn cho ${name}:</strong><br>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIMLOCK')">AIMLOCK</button>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIMBOT')">AIMBOT</button>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIM HEAD 90%')">AIM HEAD 90%</button>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIM TRACKING')">AIM TRACKING</button>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIM DRAG')">AIM DRAG</button>
+        <button class="feature-btn" onclick="toggleOption('${name}', 'AIM DICK')">AIM DICK</button>
+      
+      
+      
+      
+        `;
+
+      panel.style.display = 'block';
+    }
+
+    function closeOption() {
+      document.getElementById('optionPanel').style.display = 'none';
+    }
+
+    function toggleOption(main, sub) {
+      if (!selectedOptions[main]) selectedOptions[main] = [];
+      if (!selectedOptions[main].includes(sub)) {
+        selectedOptions[main].push(sub);
+        showToast(`✅ ${sub} của ${main} đã bật!`);
+      } else {
+        selectedOptions[main] = selectedOptions[main].filter(s => s !== sub);
+        showToast(`❌ ${sub} của ${main} đã tắt!`);
+      }
+    }
+
+    function activateAll() {
+      document.getElementById('activationLoader').style.display = 'block';
+      let prog = 0;
+      const loader = document.getElementById('activationProgress');
+      progressInterval = setInterval(() => {
+        prog += 2;
+        loader.style.width = prog + '%';
+        if (prog >= 100) {
+          clearInterval(progressInterval);
+          document.getElementById('ffChoice').style.display = 'block';
+        }
+      }, 30);
+    }
+
+    
+
+  setInterval(() => {
+      document.getElementById('ping').textContent = Math.floor(Math.random() * 60 + 10) + "ms";
+      
+      document.getElementById('fps').textContent = Math.floor(Math.random() * 60 + 10) + "";
+      
+      document.getElementById('ram').textContent = Math.floor(Math.random() * 60 + 30) + "%";
+
+      document.getElementById('cpu').textContent = Math.floor(Math.random() * 50 + 20) + "%";
+    }, 2000);
+
+
+
+    function selectFF(version) {
+      const summaryBox = document.getElementById('summaryBox');
+      let result = `🔥 Bạn đã bật các chức năng cho ${version}:<br>`;
+      for (let key in selectedOptions) {
+        if (selectedOptions[key].length > 0) {
+          result += `• <strong>${key}</strong>: ${selectedOptions[key].join(', ')}<br>`;
+        }
+      }
+      summaryBox.innerHTML = result;
+      summaryBox.style.display = 'block';
+      showToast(`🚀 Đã kích hoạt cho ${version}`);
+    }
+  </script>
+</body>
+</html>
